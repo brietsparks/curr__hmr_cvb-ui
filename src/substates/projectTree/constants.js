@@ -1,1 +1,1 @@
-export const substateKey = 'projectTree';
+export const substateKey = 'projectTreeState';

@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-import AuthRequired from '../../componentHocs/AuthRequired';
-
+import AuthRequired from '../../components/Auth/Guard';
 import ProjectList from '../../components/ProjectList';
 
-export default ({ userIsAuthenticated, dispatch }) => {
+export const Viewer = ({ userIsAuthenticated, dispatch }) => {
   return (
-    <AuthRequired userIsAuthenticated={userIsAuthenticated} dispatch={dispatch}>
+    <AuthRequired dispatch={dispatch} userIsAuthenticated={userIsAuthenticated}>
       <ProjectList userId="1" />
     </AuthRequired>
   );
-}
+};
+
+export default Viewer;

@@ -1,21 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { ConnectedRouter, routerReducer, routerMiddleware, push } from 'react-router-redux';
+import Routes from './routing/Routes';
+import { history } from './routing/history';
 
-import Viewer from './components/Viewer';
+import AuthRequired from './components/Auth/Guard';
 
-import { userIsAuthenticated as check} from './substates/auth/selectors';
+export const App = (props) => {
+  return (
+    <div>
+      {/*<AuthRequired userIsAuthenticated="" dispatch=""/>*/}
 
-export class App extends Component {
-  render() {
+      <ConnectedRouter history={history}>
+        <Routes />
+      </ConnectedRouter>
+    </div>
+  );
+};
 
-    const userIsAuthenticated = check(this.props.auth);
-    return (
-      <Viewer
-        userIsAuthenticated={userIsAuthenticated}
-        dispatch={this.props.dispatch}
-      />
-    );
-  }
-}
-
-export default connect(state => state)(App);
+export default App;

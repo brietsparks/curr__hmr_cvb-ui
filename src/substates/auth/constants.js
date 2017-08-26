@@ -1,4 +1,4 @@
-export const substateKey = 'auth';
+export const substateKey = 'authState';
 
 export const actions = {
   user: {
