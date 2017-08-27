@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import loading from './loading.svg';
+import authService from '../../Auth';
 
 class Callback extends Component {
   render() {
@@ -14,11 +14,12 @@ class Callback extends Component {
       left: 0,
       right: 0,
       backgroundColor: 'white',
-    }
+    };
 
     return (
       <div style={style}>
-        <img src={loading} alt="loading"/>
+        <p>Logging in...</p>
+        {/*<img src={loading} alt="loading"/>*/}
       </div>
     );
   }

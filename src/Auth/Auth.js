@@ -1,4 +1,4 @@
-import history from '../history';
+import { history } from '../routing/history';
 import auth0 from 'auth0-js';
 import { AUTH_CONFIG } from './auth0-variables';
 
@@ -13,13 +13,13 @@ export default class Auth {
   });
 
   constructor() {
-    this.login = this.login.bind(this);
+    this.showModal = this.showModal.bind(this);
     this.logout = this.logout.bind(this);
     this.handleAuthentication = this.handleAuthentication.bind(this);
     this.isAuthenticated = this.isAuthenticated.bind(this);
   }
 
-  login() {
+  showModal() {
     this.auth0.authorize();
   }
 

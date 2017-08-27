@@ -1,12 +1,24 @@
 import React from 'react';
 import { Route } from 'react-router';
 
-import View from '../pages/View';
+import ViewPage from '../pages/View';
+import Callback from '../Pages/Callback';
+import authService from '../Auth';
+
+const handleAuthentication = (nextState, replace) => {
+  if (/access_token|id_token|error/.test(nextState.location.hash)) {
+    authService.handleAuthentication();
+  }
+};
 
 export const Routes = (props) => (
   <div>
-    <Route path="/view" component={View}/>
-    <Route path="/callback" component={() => null}/>
+    <Route path="/view" render={ props => <ViewPage/> }/>
+    <Route path="/callback" render={(props) => {
+      handleAuthentication(props);
+      return <Callback {...props} />
+    }}/>
+    {/*<Route path="/callback" render={ (props) => <Callback {...props} /> } />*/}
   </div>
 );
 

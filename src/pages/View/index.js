@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import Viewer from '../components/Viewer';
-import { withLayout } from '../hocs/Layout';
+import Viewer from '../../components/Viewer';
+import { withLayout } from '../../hocs/Layout';
 
 export class ViewPage extends Component {
   render() {

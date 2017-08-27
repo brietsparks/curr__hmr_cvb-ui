@@ -1,8 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default ({ logout }) => (
+export const Logout = ({ unauthenticate }) => (
   <div>
-    <button onClick={ () => logout() }>Logout</button>
+    <button onClick={ () => unauthenticate() }>Logout</button>
   </div>
-)
+);
+
+export default Logout;

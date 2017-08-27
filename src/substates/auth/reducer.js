@@ -8,7 +8,8 @@ const defaultState = {
     attributes: {
       // attributes
     }
-  }
+  },
+  isFetching: false,
 };
 
 const authReducer = (initialState = defaultState, action) => {
@@ -19,6 +20,9 @@ const authReducer = (initialState = defaultState, action) => {
     case actions.user.SET.DEFAULT:
       state.user = payload.user;
       break;
+
+    case actions.login.SUCCESS:
+      state.isFetching = false
   }
 
   return state;

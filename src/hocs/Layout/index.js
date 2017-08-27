@@ -22,7 +22,7 @@ export const withLayout = (Component) => class Layout extends Component {
       <div>
         <header>
           <AuthRequired userIsAuthenticated={userIsAuthenticated} dispatch={dispatch}>
-            <Logout logout={() => null}/>
+            <Logout unauthenticate={() => null}/>
           </AuthRequired>
         </header>
 

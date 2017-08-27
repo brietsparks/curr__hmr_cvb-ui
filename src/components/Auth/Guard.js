@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Auth from './Login';
 
-import { mockAuth } from '../../substates/auth/actions';
+import { loginShow } from '../../substates/auth/actions';
 
 class AuthRequired extends React.Component {
   static propTypes = {
@@ -13,8 +13,10 @@ class AuthRequired extends React.Component {
   };
 
   render() {
+    const dispatch = this.props.dispatch;
+
     const guestComponent = this.props.guestComponent === undefined
-      ? <Auth authenticate={ () => this.props.dispatch(mockAuth()) } />
+      ? <Auth authenticate={ () => dispatch(loginShow()) } />
       : null;
 
     return this.props.userIsAuthenticated
