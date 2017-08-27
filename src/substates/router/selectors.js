@@ -3,10 +3,6 @@ import { substateKey } from './constants';
 
 export const getSubstate = state => state ? state[substateKey] : null;
 
-export const getUser = substate => {
-  return substate.user;
-  // return substate ? substate.user: null;
-};
 
 export const userIsAuthenticated = state => {
   const substate = getSubstate(state);

@@ -5,9 +5,10 @@ export const attributesShape = {
 
 export const userShape = {
   id: PropTypes.string,
-  attributes: PropTypes.shape(attributesShape)
+  attributes: PropTypes.shape(attributesShape).isRequired
 };
 
 export const authStateShape = {
-  user: PropTypes.shape(userShape)
+  initialized: PropTypes.bool,
+  user: PropTypes.shape(userShape).isRequired
 };

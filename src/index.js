@@ -9,13 +9,15 @@ import Routes from './routing/Routes';
 import { history } from './routing/history';
 
 import App from './App';
+import { substateKey as apolloStateKey } from './substates/apollo/constants';
+import { substateKey as routerStateKey } from './substates/router/constants';
 
 const apolloClient = initApolloClient();
 
 const store = initStore({
   reducers: {
-    apollo: apolloClient.reducer(),
-    router: routerReducer,
+    [apolloStateKey]: apolloClient.reducer(),
+    [routerStateKey]: routerReducer,
   },
   middleware: [
     apolloClient.middleware(),

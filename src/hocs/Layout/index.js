@@ -8,6 +8,8 @@ import { userIsAuthenticated as check} from '../../substates/auth/selectors';
 import AuthRequired from '../../components/Auth/Guard';
 import Logout from '../../components/Auth/Logout';
 
+import { logout } from '../../substates/auth/actions';
+
 export const withLayout = (Component) => class Layout extends Component {
   static propTypes = {
     [authStateKey]: PropTypes.shape(authStateShape).isRequired,
@@ -16,13 +18,13 @@ export const withLayout = (Component) => class Layout extends Component {
 
   render() {
     const dispatch = this.props.dispatch;
-    const userIsAuthenticated = check(this.props[authStateKey]);
+    const userIsAuthenticated = check(this.props);
 
     return (
       <div>
         <header>
           <AuthRequired userIsAuthenticated={userIsAuthenticated} dispatch={dispatch}>
-            <Logout unauthenticate={() => null}/>
+            <Logout unauthenticate={() => dispatch(logout({ route: '/' })) }/>
           </AuthRequired>
         </header>
 

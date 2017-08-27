@@ -1,5 +1,8 @@
+import decode from 'jwt-decode';
 import { actions } from './constants';
 import authService from '../../Auth';
+import { history } from '../../routing/history';
+
 
 export const setUser = user => {
   return {
@@ -8,61 +11,60 @@ export const setUser = user => {
   }
 };
 
+export const initUser = (idToken) => {
+  return dispatch => {
+    idToken = idToken || localStorage.getItem('id_token');
+
+    const decoded = idToken ? decode(idToken) : null;
+
+    if (decoded) {
+      dispatch(setUser({ id: decoded.sub }))
+    }
+
+    dispatch({
+      type: actions.initialized.SET.DEFAULT,
+      payload: { initialized: true }
+    });
+  }
+};
+
 export const loginShow = () => {
-  authService.showModal();
+  authService.authorize();
   return { type: actions.login.SHOW };
 };
 
-function loginSuccess(profile, token) {
-  return {
-    type: actions.login.SUCCESS,
-    profile,
-    token
-  };
-}
-
-function loginFailure(err) {
-  return {
-    type: actions.login.FAILURE,
-    err
-  };
-}
-
-// Opens the Lock widget and
-// dispatches actions along the way
-export function login() {
-  const lock = createLock();
+export const loginFinalize = (route) => {
   return dispatch => {
-    lock.show()
+    authService.parseHash((err, authResult) => {
+      const { accessToken, idToken, expiresIn } = authResult;
+      if (authResult && accessToken && idToken) {
+        localStorage.setItem('access_token', accessToken);
+        localStorage.setItem('id_token', idToken);
+
+        let expiresAt = JSON.stringify((expiresIn * 1000) + new Date().getTime());
+        localStorage.setItem('expires_at', expiresAt);
+
+        dispatch({ type: actions.login.TOKENS_STORED });
+
+        history.replace(route);
+
+        dispatch(initUser(idToken));
+      } else if (err) {
+        console.log(err);
+        alert(`Error: ${err.error}. Check the console for further details.`);
+      }
+    });
   }
-}
+};
 
-// Three possible states for our logout process as well.
-// Since we are using JWTs, we just need to remove the token
-// from localStorage. These actions are more useful if we
-// were calling the API to log the user out
-function requestLogout() {
-  return {
-    type: actions.logout.ATTEMPT,
-    isFetching: true,
-    isAuthenticated: true
-  };
-}
-
-function receiveLogout() {
-  return {
-    type: actions.logout.SUCCESS,
-    isFetching: false,
-    isAuthenticated: false
-  };
-}
-
-
-// Logs the user out
-export function logoutUser() {
+export const logout = ({ route }) => {
   return dispatch => {
-    dispatch(requestLogout());
+    localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
-    dispatch(receiveLogout())
-  };
-}
+    localStorage.removeItem('expires_at');
+
+    history.replace(route);
+    dispatch({ type: actions.logout.DEFAULT });
+    dispatch(setUser({ id: null }));
+  }
+};

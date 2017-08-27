@@ -3,6 +3,7 @@ import { cloneDeep } from 'lodash';
 import { actions } from './constants';
 
 const defaultState = {
+  initialized: false,
   user: {
     id: null,
     attributes: {
@@ -21,8 +22,9 @@ const authReducer = (initialState = defaultState, action) => {
       state.user = payload.user;
       break;
 
-    case actions.login.SUCCESS:
-      state.isFetching = false
+    case actions.initialized.SET.DEFAULT:
+      state.initialized = payload.initialized;
+      break;
   }
 
   return state;

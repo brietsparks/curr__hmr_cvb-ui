@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import authService from '../../Auth';
+import { connect } from 'react-redux';
+
+import { loginFinalize } from '../../substates/auth/actions';
 
 class Callback extends Component {
+  componentWillMount() {
+    this.props.dispatch(loginFinalize(this.props.redirectRoute || '/'));
+  }
+
   render() {
     const style = {
       position: 'absolute',
@@ -25,4 +31,6 @@ class Callback extends Component {
   }
 }
 
-export default Callback;
+const CallbackWithState = connect(state => state)(Callback);
+
+export default CallbackWithState;

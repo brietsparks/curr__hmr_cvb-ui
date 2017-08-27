@@ -10,16 +10,16 @@ const ProjectList = ({ data }) => {
 
 const makeProjectListQuery = userId => gql`
   query {
-    history(userId: "${userId}") {
+    history(user_id: "${userId}") {
       id,
-      userId,
-      parentId,
+      user_id,
+      parent_id,
       title,
       contributions {
         id,
         skills {
           id,
-          canonicalName
+          canonical_name
         }
       }
     }
