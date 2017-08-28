@@ -8,20 +8,20 @@ import { loginShow } from '../../substates/auth/actions';
 class AuthRequired extends React.Component {
   static propTypes = {
     userIsAuthenticated: PropTypes.bool.isRequired,
-    guestComponent: PropTypes.func,
+    showAuth: PropTypes.bool,
     dispatch: PropTypes.func.isRequired,
   };
 
-  render() {
-    const dispatch = this.props.dispatch;
+  static defaultProps = {
+    showAuth: true
+  };
 
-    const guestComponent = this.props.guestComponent === undefined
-      ? <Auth authenticate={ () => dispatch(loginShow()) } />
-      : null;
+  render() {
+    const authenticate = () => this.props.dispatch(loginShow());
 
     return this.props.userIsAuthenticated
       ? <div>{ this.props.children }</div>
-      : guestComponent
+      : this.props.showAuth ? <Auth authenticate={authenticate} /> : null
     ;
   }
 }
