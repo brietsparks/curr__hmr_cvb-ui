@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import { initUser } from '../../substates/auth/actions';
 import { userIsAuthenticated } from '../../substates/auth/selectors';
+import { accessTokenKey } from '../../substates/auth/constants';
 
 const enhancer = Component => class WithUser extends Component {
   static propTypes = {
@@ -11,7 +12,7 @@ const enhancer = Component => class WithUser extends Component {
   };
 
   componentWillMount() {
-    const idToken = localStorage.getItem('id_token');
+    const idToken = localStorage.getItem(accessTokenKey);
 
     if (idToken && !userIsAuthenticated(this.props)) {
       this.props.dispatch(initUser());

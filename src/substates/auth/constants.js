@@ -1,5 +1,7 @@
 export const substateKey = 'authState';
 
+export const accessTokenKey = 'access_token';
+
 export const actions = {
   login: {
     SHOW: 'auth.login.SHOW',
